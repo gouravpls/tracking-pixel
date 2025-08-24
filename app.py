@@ -87,3 +87,13 @@ if __name__ == "__main__":
     # Local dev
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+# -- Add this near your other routes --
+
+@app.get("/")
+def health():
+    return {"ok": True, "service": "tracking-pixel"}
+
+@app.get("/__routes")
+def show_routes():
+    # shows everything Flask has registered
+    return {"routes": [str(r) for r in app.url_map.iter_rules()]}
